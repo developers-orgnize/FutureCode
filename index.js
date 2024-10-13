@@ -1,10 +1,20 @@
 const express = require('express');
+const router = express.Router();
 const mongoose = require('mongoose');
 const Product = require('./models/Product.Model');
+const productRoute=require('./routers/Product.Routes.js')
 const app = express();
 
-
+// Middleware to parse URL-encoded form data
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+//router
+app.use("/api/products", productRoute)
+
+//add for same "/api/products" crud operation 
+
+
 
 // back-end  is running port 3000 
 
@@ -52,6 +62,11 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
+
+
+
+//create schema add new schema
+
 app.post('/api/products', async (req, res) => {
     try {
       
@@ -69,6 +84,41 @@ app.post('/api/products', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
+
+  // update product
+app.put('/api/products/:id', async (req, res) => {
+    try {
+        const { id } = req.params;//.Get the ID from the request parameters
+
+        const product = await Product.findByIdAndUpdate(id, req.body);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        const updatedProduct = await Product.findById(id);
+        res.status(200).json(updatedProduct);// Return the updated product
+
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle any errors
+    }
+});
+
+
+// DELETE route to delete a product by ID
+app.delete('/api/products/:id', async (req, res) => {
+    const { id } = req.params; // Extract the ID from the request parameters
+    try {
+        const deletedProduct = await Product.findByIdAndDelete(id); // Find and delete the product by ID
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Product not found' }); // Return 404 if product is not found
+        }
+        res.status(200).json({ message: 'Product deleted successfully' }); // Return success message
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Handle any errors
+    }
+});
+
   
 //nodemon use for when refreshing web site thi application shlould be in this method
 
@@ -80,7 +130,7 @@ app.post('/api/products', async (req, res) => {
 
 mongoose.connect('mongodb+srv://user1:Thush12213@cluster0.9qwykfs.mongodb.net/nodedb?retryWrites=true&w=majority&appName=Cluster0')
 .then(()=>{
-    console.log("connected to the database sandalu");
+    console.log("connected to the database sandalu 🚀🚀🚀🚀");
 
     app.listen(3000,()=>{
         console.log("server is running on port 3000");
