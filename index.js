@@ -62,9 +62,6 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
-
-
-
 //create schema add new schema
 
 app.post('/api/products', async (req, res) => {
@@ -124,8 +121,6 @@ app.delete('/api/products/:id', async (req, res) => {
 
 
 //get meetgod--> retrival data from the mongo db 
-
-
 
 
 mongoose.connect('mongodb+srv://user1:Thush12213@cluster0.9qwykfs.mongodb.net/nodedb?retryWrites=true&w=majority&appName=Cluster0')

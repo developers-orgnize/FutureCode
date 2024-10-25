@@ -5,7 +5,6 @@ const Product = require('../models/Product.Model.js');
    
 const{createProduct,getProducts, getProductById, updateProduct,deleteProduct}=require('../controller/Product.controller.js');
    
-  
 
 // const productController = require('../controller/Product.controller.js');
 // router.post('/products', productController.createProduct);
