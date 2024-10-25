@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+
 const Product = require('./models/Product.Model');
 const productRoute=require('./routers/Product.Routes.js')
+const User = require('./models/User.Model.js');
+const UserRoute=require('./routers/User.Routes.js');
+
+
 const app = express();
 
 // Middleware to parse URL-encoded form data
@@ -11,6 +16,9 @@ app.use(express.json());
 
 //router
 app.use("/api/products", productRoute)
+app.use("/api/signup", UserRoute)
+
+
 
 //add for same "/api/products" crud operation 
 
@@ -77,6 +85,8 @@ app.post('/api/products', async (req, res) => {
 
 
       res.status(200).json(savedProduct);
+     
+
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -115,6 +125,28 @@ app.delete('/api/products/:id', async (req, res) => {
         res.status(500).json({ message: error.message }); // Handle any errors
     }
 });
+
+
+//create schema and add new user schema
+
+app.post('/api/signup', async (req, res) => {
+    try {
+      
+      //  const Product = await Product.create(req.body);
+
+      const { user_name, email, password } = req.body;
+
+      const newuser = new User({ user_name, email,password });
+      const saved = await newuser.save();
+
+
+
+      res.status(200).json(saved);
+    
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 
   
 //nodemon use for when refreshing web site thi application shlould be in this method
