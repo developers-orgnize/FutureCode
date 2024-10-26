@@ -81,12 +81,8 @@ app.post('/api/products', async (req, res) => {
 
       const newProduct = new Product({ name, quantity, price });
       const savedProduct = await newProduct.save();
-
-
-
       res.status(200).json(savedProduct);
      
-
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
