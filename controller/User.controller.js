@@ -1,13 +1,9 @@
 const User = require('../models/User.Model.js');
 
-
-//add functions
-
-// Create a new product
 const createuser =   async (req, res) => {
     try {
       
-      //  const Product = await Product.create(req.body);
+
 
       const { user_name, email, password } = req.body;
 
@@ -22,3 +18,6 @@ const createuser =   async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
+module.exports = {
+ createuser,
+};

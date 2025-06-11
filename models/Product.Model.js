@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema(
     {
         name: {
-            type: String, // Missing type definition for name
+            type: String, 
             required: [true, "Please enter product name"]
         },
         quantity: {
@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema(
         }
     },
     {
-        timestamps: true // Corrected "Timestamp" to "timestamps"
+        timestamps: true 
     }
 );
 
